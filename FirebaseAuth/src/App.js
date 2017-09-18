@@ -21,12 +21,6 @@ class App extends React.Component {
     componentWillMount() {
         // connect to firebase
         firebase.initializeApp({
-            apiKey: 'AIzaSyAu7BhrogkkIwa82x4nyYtHi9dMnFT5UJk',
-            authDomain: 'auth-2b776.firebaseapp.com',
-            databaseURL: 'https://auth-2b776.firebaseio.com',
-            projectId: 'auth-2b776',
-            storageBucket: 'auth-2b776.appspot.com',
-            messagingSenderId: '887709728286'
         });
 
         // onAuthStateChanged => firebase event listener
