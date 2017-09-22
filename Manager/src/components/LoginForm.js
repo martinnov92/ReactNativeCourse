@@ -24,8 +24,18 @@ class LoginForm extends React.Component {
         this.props.loginUser({ email, password });
     }
 
+    renderButton() {
+        if (this.props.loading) {
+            return <Spinner />;
+        }
+
+        return <Button onPress={this.handleLogin}>
+            Log in
+        </Button>;
+    }
+
     render() {
-        const { error, loading } = this.props;
+        const { error } = this.props;
 
         return(
             <Card>
@@ -56,13 +66,7 @@ class LoginForm extends React.Component {
                     : null
                 }
                 <CardSection>
-                    {
-                        loading
-                        ? <Spinner />
-                        : <Button onPress={this.handleLogin}>
-                            Log in
-                        </Button>
-                    }
+                    { this.renderButton() }
                 </CardSection>
             </Card>
         );
