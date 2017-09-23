@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
 
-import LoginForm from './components/LoginForm';
+import Router from './Router';
 
 // import reducerů pro předání do createStore
 import reducers from './reducers';
@@ -14,7 +14,7 @@ export default class App extends React.Component {
     componentWillMount() {
         // config soubor z firebase.com pro Web
         const config = {
-            // FIREBASE
+
         };
 
         // připojení k firebasu
@@ -29,7 +29,7 @@ export default class App extends React.Component {
                 // applyMiddleware => store enhancer
                 store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}
             >
-                <LoginForm />
+                <Router />
             </Provider>
         );
     }

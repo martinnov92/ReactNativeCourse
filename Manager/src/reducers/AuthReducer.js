@@ -22,14 +22,17 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case EMAIL_CHANGED:
+            // reducer musí vracet nový object
             return {
                 ...state,
-                email: action.payload
+                email: action.payload,
+                error: ''
             };
         case PASSWORD_CHANGED:
             return {
                 ...state,
-                password: action.payload
+                password: action.payload,
+                error: ''
             };
         case LOGIN_USER_SUCCESS:
             return {

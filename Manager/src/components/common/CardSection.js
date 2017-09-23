@@ -6,7 +6,7 @@ import {
 const CardSection = (props) => {
     return (
         <View
-            style={styles.container}
+            style={[styles.container, props.style]}
         >
             { props.children }
         </View>
