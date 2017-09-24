@@ -47,8 +47,46 @@ export const employeesFetch = () => {
             .on('value', (snapshot) => {
                 // on je něco jako eventListener, stačí zavolat v aplikaci jen jednou
                 // snapshot je něco jako object který popisuje obsah jeho dat, slouží k získání dat
-                // pomocí snapshot.val()
+                // pomocí snapshot.val(), bude se volat pokaždé když se něco změní
+                // s tím se bude automaticky aktualizovat i redux
                 dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() });
+            });
+    };
+};
+
+export const employeeSaveChanges = ({ name, phone, shift, uid }) => {
+    const { currentUser } = firebase.auth();
+
+    return (dispatch) => {
+        firebase
+            .database()
+            // tentokrát musím předat i ID, aby firebase věděl, co updatovat
+            .ref(`/users/${currentUser.uid}/employees/${uid}`)
+            // .set => update hodnot v db
+            .set({ name, phone, shift })
+            .then(() => {
+                // zjistit jak vyresetovat router stack, aby se nezobrazovala šipka zpět
+                // ve verzi 3 fungovalo type: 'reset', ve verzi 4 už to nefunguje
+                Actions.employeeList();
+                // vyčistit formulář
+                dispatch({ type: EMPLOYEE_CREATE });
+            });
+    };
+};
+
+export const employeeDelete = ({ uid }) => {
+    const { currentUser } = firebase.auth();
+
+    return () => {
+        firebase
+            .database()
+            .ref(`/users/${currentUser.uid}/employees/${uid}`)
+            .remove()
+            .then(() => {
+                // pro jistotu vyčistit redux state forumuláře
+                dispatch({ type: EMPLOYEE_CREATE });
+                // přesměroví, vyřešit promazání router stacku
+                Actions.employeeList();
             });
     };
 };

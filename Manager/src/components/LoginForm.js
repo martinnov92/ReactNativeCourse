@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
         }
 
         return <Button onPress={this.handleLogin}>
-            Log in
+            Přihlásit
         </Button>;
     }
 
@@ -52,8 +52,8 @@ class LoginForm extends React.Component {
                 <CardSection>
                     <Input
                         secureTextEntry
-                        label="Password"
-                        placeholder="Password"
+                        label="Heslo"
+                        placeholder="Heslo"
                         value={this.props.password}
                         onChangeText={(text) => this.props.passwordChanged(text)}
                     />

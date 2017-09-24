@@ -5,6 +5,7 @@ import { Stack, Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import EmployeesList from './components/EmployeesList';
 import EmployeeCreate from './components/EmployeeCreate';
+import EmployeeEdit from './components/EmployeeEdit';
 
 const RouterComponent = () => {
     // ve verzi 4 react routeru flux musím použít root scene,
@@ -22,7 +23,7 @@ const RouterComponent = () => {
                         // key je potřeba pro budoucí volání Actions z Routeru
                         key="login"
                         component={LoginForm}
-                        title="Please login"
+                        title="Přihlášení"
                         initial
                     />
                 </Stack>
@@ -34,7 +35,7 @@ const RouterComponent = () => {
                     <Scene
                         key="employeeList"
                         component={EmployeesList}
-                        title="Employee list"
+                        title="Zaměstnanci"
                         rightTitle="+"
                         onRight={() => Actions.employeeCreate()}
                         initial
@@ -43,7 +44,12 @@ const RouterComponent = () => {
                     <Scene
                         key="employeeCreate"
                         component={EmployeeCreate}
-                        title="Create employee"
+                        title="Přidat zaměstnance"
+                    />
+                    <Scene
+                        key="employeeEdit"
+                        component={EmployeeEdit}
+                        title="Upravit zaměstnance"
                     />
                 </Stack>
             </Stack>
