@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import {
     EMPLOYEE_UPDATE,
     EMPLOYEE_CREATE,
@@ -26,10 +26,9 @@ export const employeeCreate = ({ name, phone, shift }) => {
             .ref(`/users/${currentUser.uid}/employees`)
             // .push přidá data do databáze
             .push({ name, phone, shift })
-            // type: 'reset', resetuj view stack, aby se nezobrazilo back button => ve verzi 4 nefunguje
             .then(() => {
                 dispatch({ type: EMPLOYEE_CREATE });
-                Actions.employeeList();
+                Actions.main({ type: ActionConst.RESET });
             });
     };
 };
@@ -65,9 +64,7 @@ export const employeeSaveChanges = ({ name, phone, shift, uid }) => {
             // .set => update hodnot v db
             .set({ name, phone, shift })
             .then(() => {
-                // zjistit jak vyresetovat router stack, aby se nezobrazovala šipka zpět
-                // ve verzi 3 fungovalo type: 'reset', ve verzi 4 už to nefunguje
-                Actions.employeeList();
+                Actions.main({ type: ActionConst.RESET });
                 // vyčistit formulář
                 dispatch({ type: EMPLOYEE_CREATE });
             });
@@ -77,7 +74,7 @@ export const employeeSaveChanges = ({ name, phone, shift, uid }) => {
 export const employeeDelete = ({ uid }) => {
     const { currentUser } = firebase.auth();
 
-    return () => {
+    return (dispatch) => {
         firebase
             .database()
             .ref(`/users/${currentUser.uid}/employees/${uid}`)
@@ -85,8 +82,7 @@ export const employeeDelete = ({ uid }) => {
             .then(() => {
                 // pro jistotu vyčistit redux state forumuláře
                 dispatch({ type: EMPLOYEE_CREATE });
-                // přesměroví, vyřešit promazání router stacku
-                Actions.employeeList();
+                Actions.main({ type: ActionConst.RESET });
             });
     };
 };
